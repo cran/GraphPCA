@@ -1,0 +1,9 @@
+exportPattern(".Hypercube",".auxilary",".cube",".f",".fintab","HistPCA","Visu","GraphPCA-internal")
+import(ggplot2)
+import(FactoMineR)
+import(scatterplot3d)
+import(scales)
+
+
+
+
