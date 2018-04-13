@@ -5,12 +5,10 @@
 Performs a PCA of multiple tables of histogram variables.
 }
 \usage{
-HistPCA(Variable = list, score = NULL, t = 1.1,
- axes = c(1, 2),Row.names = NULL, xlim = NULL,
- ylim = NULL, xlegend = NULL, ylegend = NULL,
- Col.names = NULL, transformation = 1,
- method = "hypercube", proc = 0,
- plot3d.table = NULL, axes2 = c(1, 2, 3))
+HistPCA(Variable = list, score = NULL, t = 1.1, axes = c(1, 2), 
+        Row.names = NULL, xlim = NULL, ylim = NULL, xlegend = NULL, ylegend = NULL,
+        Col.names = NULL, transformation = 1, method = "hypercube", proc = 0,
+        plot3d.table = NULL, axes2 = c(1, 2, 3), ggplot = 1)
 }
 
 \arguments{
@@ -63,14 +61,19 @@ appear.
   \item{axes2}{
 a length 2 vector specifying the components to plot
 }
-
+  \item{ggplot}{
+%%     ~~Describe \code{ggplot} here~~
+}
+}
+\details{
+See Examples
 }
 \value{
 
- \item{Correlation}{Correlations between means of histogram and their principal components}
-\item{Tablemean}{Table containing the average of histogram mean}
-\item{eigenvector}{eigen vector of PCA of histogram mean}
-\item{eigen_value_summary}{a matrix containing all the eigenvalues, 
+  \item{Correlation}{Correlations between means of histogram and their principal components}
+ \item{Tableaumean}{Table containing the average of histogram mean}
+ \item{VecteurPropre}{eigen vector of PCA of histogram mean}
+\item{PourCentageComposante}{a matrix containing all the eigenvalues, 
 the percentage of variance and the cumulative percentage of variance}
 \item{PCinterval}{Data frame  containing the coordinates of 
 the individuals on the principal axes}
@@ -82,10 +85,9 @@ Billard, L. and E. Diday (2006). Symbolic Data Analysis: conceptual statistics a
 Berlin: Wiley series in computational statistics.
 
 Diday, E., Rodriguez O. and Winberg S. (2000). Generalization of the Principal Components Analysis
-to Histogram Data, 4th European Conference on Principles and Practice of Knowledge Discovery in Data Bases,
- September 12-16, 2000, Lyon, France.
+to Histogram Data, 4th European Conference on Principles and Practice of Knowledge Discovery in Data Bases, September 12-16, 2000, Lyon, France.
 
-Donoho, D., & Ramos, E. (1982). Primdata: Data Sets for Use With PRIM-H. Version for
+Donoho, D.,  Ramos, E. (1982). Primdata: Data Sets for Use With PRIM-H. Version for
 second (15-18, Aug, 1983) Exposition of Statistical
 Graphics Technology, by American Statistical
 Association.
@@ -101,99 +103,56 @@ variables, Advances in Data Analysis and Classification July, Volume 6, Issue 2,
 }
 \author{
 
-Brahim Brahim <brahim.brahim@bigdatavisualizations.com> and Sun Makosso-Kallyth <sun.makosso-kallyth@crchuq.ulaval.ca>
+Brahim Brahim <brahim.brahim@bigdatavisualizations.com> and Sun Makosso-Kallyth <makosso.sun@gmail.com>
 
 }
 
 
 \examples{
-data(Hist1)
-data(Hist2)
-data(Hist3)
-data(Hist4)
-data(Hist5)
-data(Hist6)
+data(movies)
+ab = movies
+ab = na.omit(ab)
+Action = subset(ab,Action==1)
+Action$genre = as.factor("Action")
+Drama = subset(ab,Drama==1)
+Drama$genre = as.factor("Drama")
 
-example0=HistPCA(Variable=list
-(Hist1,Hist2,Hist3,Hist4,Hist5
-,Hist6),axes=c(1,2),Row.names=
-paste('Year',70:82,sep='-'),
-Col.names=c('mpg', 
-'cylinders', 
-'displacement',
-'horsepower',
-'weight',
-'acceleration'
-),score=list(c(1:5),c(1:4),c(1:5),c(1:5),c(1:5),c(1:5)))
-example0
+Animation = subset(ab,Animation==1)
+Animation$genre = as.factor("Animation")
 
-example1=HistPCA(Variable=list
-(Hist1,Hist2,Hist3,Hist4,Hist5
-,Hist6),axes=c(1,2),Row.names=
-paste('Year',70:82,sep='-'),
-Col.names=c('mpg', 
-'cylinders', 
-'displacement',
-'horsepower',
-'weight',
-'acceleration'
-))
-example1
+Comedy = subset(ab,Comedy==1)
+Comedy$genre = as.factor("Comedy")
+
+Documentary = subset(ab,Documentary ==1)
+Documentary $genre = as.factor("Documentary")
 
 
-PC_example1=HistPCA(Variable=list
-(Hist1,Hist2,Hist3,Hist4,Hist5
-,Hist6),axes=c(1,2),Row.names=
-paste('Year',70:82,sep='-'),
-Col.names=c('mpg', 
-'cylinders', 
-'displacement',
-'horsepower',
-'weight',
-'acceleration'
-))$PCinterval
-example1
+Romance = subset(ab,Romance==1)
+Romance$genre = as.factor("Romance")
 
-example2=HistPCA(Variable=list
-(Hist1,Hist2,Hist3,Hist4,Hist5
-,Hist6),axes=c(1,2),Row.names=
-paste('Year',70:82,sep='-'),
-Col.names=c('mpg', 
-'cylinders', 
-'displacement',
-'horsepower',
-'weight',
-'acceleration'),
-transformation=2
-)
-example2
+Short = subset(ab,Short==1)
+Short$genre = as.factor("Short")
 
+ ab = rbind(Action,Drama,Animation,Comedy,Documentary,Romance,Short)
+ Hist1=PrepHistogram(X=sapply(ab[,3],unlist),Z=ab[,25],k=5)$Vhistogram
+Hist2=PrepHistogram(X=sapply(ab[,4],unlist),Z=ab[,25],k=5)$Vhistogram
+ Hist3=PrepHistogram(X=sapply(ab[,5],unlist),Z=ab[,25],k=5)$Vhistogram
+Hist4=PrepHistogram(X=sapply(ab[,6],unlist),Z=ab[,25],k=5)$Vhistogram
+ Hist5=PrepHistogram(X=sapply(ab[,7],unlist),Z=ab[,25],k=5)$Vhistogram
+ 
+ ss1=Ridi(Hist1)$Ridit
+ ss2=Ridi(Hist2)$Ridit
+ ss3=Ridi(Hist3)$Ridit
+ ss4=Ridi(Hist4)$Ridit
+ ss5=Ridi(Hist5)$Ridit
 
-example3=HistPCA(Variable=list
-(Hist1,Hist2,Hist3,Hist4,Hist5
-,Hist6),axes=c(1,2),Row.names=
-paste('Year',70:82,sep='-'),
-Col.names=c('mpg', 
-'cylinders', 
-'displacement',
-'horsepower',
-'weight',
-'acceleration'),
-method='longueur')
-example3
+ 
+HistPCA(list(Hist1,Hist2,Hist3,Hist4,Hist5),score=list(ss1,ss2,ss3,ss4,ss5))
 
-
-example4=HistPCA(Variable=list
-(Hist1,Hist2,Hist3,Hist4,Hist5
-,Hist6),axes=c(1,2),Row.names=
-paste('Year',70:82,sep='-'),
-Col.names=c('mpg', 
-'cylinders', 
-'displacement',
-'horsepower',
-'weight',
-'acceleration'),
-method='longueur',proc=1)
-example4
-
+res_pca=HistPCA(list(Hist1,Hist2,Hist3,Hist4,Hist5),score=list(ss1,ss2,ss3,ss4,ss5))
+ 
+ Visu(res_pca$PCinterval)
 }
+
+
+

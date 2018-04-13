@@ -1,15 +1,15 @@
 Package: GraphPCA
 Type: Package
-Title: GraphPCA, Graphical tools of histogram PCA
-Version: 1.0
+Title: Graphical Tools of Histogram PCA
+Version: 1.1
 Depends: R (>= 2.15.1)
-Imports: ggplot2, FactoMineR, scatterplot3d, scales,
-Date: 2014-03-21
-Author: Brahim Brahim <brahim.brahim@bigdatavisualizations.com> and Sun Makosso-Kallyth <sun.makosso-kallyth@crchuq.ulaval.ca>
+Imports: ggplot2, FactoMineR, scatterplot3d,ggplot2movies
+Date: 2018-04-04
+Author: Brahim Brahim <brahim.brahim@bigdatavisualizations.com> and Sun Makosso-Kallyth <makosso.sun@gmail.com>
 Maintainer: Brahim Brahim <brahim.brahim@bigdatavisualizations.com>
-Description: This package implements a histogram principal components analysis. It provides numerical and graphical tools to deal with big data.
+Description: Histogram principal components analysis is the generalization of the PCA. Histogram data are adapted to design complex and big data which histograms used as variables (big data adapter). Functions implemented provides numerical and graphical tools of an extension of PCA. Sun Makosso Kallyth (2016) <doi:10.1002/sam.11270>. Sun Makosso Kallyth and Edwin Diday (2012) <doi:10.1007/s11634-012-0108-0>.
 License: GPL (>= 2)
-Packaged: 2014-03-28 12:18:15 UTC; PSA
 NeedsCompilation: no
+Packaged: 2018-04-13 18:48:09 UTC; PSA
 Repository: CRAN
-Date/Publication: 2014-03-28 13:53:47
+Date/Publication: 2018-04-13 20:20:04 UTC

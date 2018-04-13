@@ -1,9 +1,8 @@
-exportPattern(".Hypercube",".auxilary",".cube",".f",".fintab","HistPCA","Visu","GraphPCA-internal")
+exportPattern("^[[:alpha:]]+")
+import(ggplot2movies)
 import(ggplot2)
 import(FactoMineR)
 import(scatterplot3d)
-import(scales)
-
 
 
 
